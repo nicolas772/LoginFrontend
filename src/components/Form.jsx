@@ -1,6 +1,37 @@
 import * as React from 'react'
+import { useState } from 'react';
+import { signIn as awsSignIn } from 'aws-amplify/auth';
+import { useNavigate } from 'react-router-dom';
 
-function Form() {
+
+const Form = () => {
+   const [username, setUsername] = useState("");
+   const [password, setPassword] = useState("");
+   const navigate = useNavigate()
+
+   const onChangeUsername = (e) => {
+      const username = e.target.value;
+      setUsername(username);
+   };
+
+   const onChangePassword = (e) => {
+      const password = e.target.value;
+      setPassword(password);
+   };
+
+   async function signInUser() {
+      try {
+         const { isSignedIn, nextStep } = await awsSignIn({ username, password });
+         if (isSignedIn){
+            navigate("/home")
+         }else {
+            console.log(nextStep)
+         }
+      } catch (error) {
+         console.log('Error al iniciar sesión:', error);
+      }
+   }
+
    return (
       <div className='bg-white px-10 py-20 rounded-3xl border-gray-200'>
          <h1 className='text-5xl font-semibold'>Bienvenido!</h1>
@@ -11,6 +42,7 @@ function Form() {
                <input
                   className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
                   placeholder='Ingresa tu correo electrónico'
+                  onChange={onChangeUsername}
                />
             </div>
             <div>
@@ -19,6 +51,7 @@ function Form() {
                   type='password'
                   className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
                   placeholder='Ingresa tu contraseña'
+                  onChange={onChangePassword}
                />
             </div>
             <div className='mt-8 flex justify-between items-center'>
@@ -31,8 +64,10 @@ function Form() {
                <button className='font-medium text-base text-green-700 ml-2'>¿Olvidaste tu contraseña?</button>
             </div>
             <div className='mt-8 flex flex-col gap-y-4'>
-               <button className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out py-3 rounded-xl bg-green-700 text-white text-lg font-bold'>
-                 Iniciar Sesión
+               <button
+                  onClick={signInUser}
+                  className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out py-3 rounded-xl bg-green-700 text-white text-lg font-bold'>
+                  Iniciar Sesión
                </button>
                <button className='flex rounded-xl py-3 border-2 border-gray-100 items-center justify-center gap-2 active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out'>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

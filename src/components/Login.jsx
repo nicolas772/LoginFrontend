@@ -1,7 +1,8 @@
 import * as React from 'react'
 import Form from './Form'
+import FormAWS from './FormAWS'
 
-function App() {
+function Login() {
   return (
     <>
       <div className='flex w-full h-screen'>
@@ -17,4 +18,4 @@ function App() {
   )
 }
 
-export default App
+export default Login
