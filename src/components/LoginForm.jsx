@@ -4,7 +4,7 @@ import { signIn as awsSignIn } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
 
 
-const Form = () => {
+const LoginForm = () => {
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
    const navigate = useNavigate()
@@ -36,6 +36,7 @@ const Form = () => {
       <div className='bg-white px-10 py-20 rounded-3xl border-gray-200'>
          <h1 className='text-5xl font-semibold'>Bienvenido!</h1>
          <p className='font-medium text-lg text-gray-500 mt-4'>Por favor, ingresa tus datos.</p>
+         <div className="border-t-2 border-gray-200 my-8"></div>
          <div className='mt-8'>
             <div>
                <label className='text-lg font-medium'>Email</label>
@@ -54,7 +55,7 @@ const Form = () => {
                   onChange={onChangePassword}
                />
             </div>
-            <div className='mt-8 flex justify-between items-center'>
+            {/*<div className='mt-8 flex justify-between items-center'>
                <div>
                   <input
                      type="checkbox"
@@ -62,7 +63,7 @@ const Form = () => {
                   <label className='ml-2 font-medium text-base' htmlFor="remember">Recuerdame</label>
                </div>
                <button className='font-medium text-base text-green-700 ml-2'>¿Olvidaste tu contraseña?</button>
-            </div>
+            </div>*/}
             <div className='mt-8 flex flex-col gap-y-4'>
                <button
                   onClick={signInUser}
@@ -82,7 +83,7 @@ const Form = () => {
             <div className='mt-8 flex justify-center items-center'>
                <p className='font-medium text-base'>¿No tienes una cuenta?</p>
                <button
-                  onClick={() => {navigate("/register")} }
+                  onClick={() => { navigate("/register") }}
                   className='text-green-700 text-base font-medium ml-2'>Registrate</button>
             </div>
          </div>
@@ -90,4 +91,4 @@ const Form = () => {
    )
 }
 
-export default Form
+export default LoginForm

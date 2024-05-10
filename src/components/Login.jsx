@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Form from './Form'
+import LoginForm from './LoginForm'
 import FormAWS from './FormAWS'
 
 function Login() {
@@ -7,7 +7,7 @@ function Login() {
     <>
       <div className='flex w-full h-screen'>
         <div className='w-full flex items-center justify-center lg:w-1/2'>
-          <Form></Form>
+          <LoginForm></LoginForm>
         </div>
         <div className='hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200'>
           <div className='w-60 h-60 bg-gradient-to-tr from-green-700 to-green-400 rounded-full animate-bounce'/>
