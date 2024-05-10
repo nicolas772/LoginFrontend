@@ -2,11 +2,15 @@ import * as React from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { confirmSignUp } from 'aws-amplify/auth';
+import { useLocation } from 'react-router-dom';
 
 const VerificationForm = (props) => {
     const { username } = props
     const [confirmationCode, setConfirmationCode] = useState("");
     const [inConfirmation, setInConfirmation] = useState(true)
+    const [error, setError] = useState("")
+    const location = useLocation()
+    const currentUrl = location.pathname
     const navigate = useNavigate()
 
     const onChangeCode = (e) => {
@@ -20,15 +24,22 @@ const VerificationForm = (props) => {
                 username,
                 confirmationCode
             })
-            console.log(isSignUpComplete)
-            console.log(nextStep)
             if (isSignUpComplete) {
                 setInConfirmation(false)
             }
         } catch (error) {
-            console.log('error confirming signup', error)
+            setError(error.message)
         }
     }
+
+    function handleRedirectLogin() {
+        if (currentUrl === '/register'){
+            navigate('/login')
+        }else {
+            window.location.reload();
+        }
+    }
+
     return (
         <>
             {inConfirmation ? (
@@ -45,6 +56,7 @@ const VerificationForm = (props) => {
                                 onChange={onChangeCode}
                             />
                         </div>
+                        {error && <p className='text-red-500 mt-4 max-w-md'>{error}</p>}
                         <div className='mt-8 flex flex-col gap-y-4'>
                             <button
                                 onClick={handleSignUpConfirmation}
@@ -69,7 +81,7 @@ const VerificationForm = (props) => {
                         
                         <div className='mt-8 flex justify-center items-center'>
                             <button
-                                onClick={() => { navigate('/login') }}
+                                onClick={handleRedirectLogin}
                                 className='text-green-700 text-base font-medium ml-2'>Iniciar Sesión</button>
                         </div>
                     </div>

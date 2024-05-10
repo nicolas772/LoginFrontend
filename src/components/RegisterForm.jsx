@@ -9,6 +9,7 @@ const RegisterForm = () => {
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
    const [passwordVerif, setPasswordVerif] = useState("");
+   const [error, setError] = useState("")
    const [inVerification, setInVerification] = useState(false)
    const navigate = useNavigate()
 
@@ -37,7 +38,7 @@ const RegisterForm = () => {
             setInVerification(true)
          }
       } catch (error) {
-         console.log('error signing up:', error);
+         setError(error.message)
       }
    }
 
@@ -75,6 +76,7 @@ const RegisterForm = () => {
                         onChange={onChangePasswordVerif}
                      />
                   </div>
+                  {error && <p className='text-red-500 mt-4 max-w-72'>{error}</p>}
                   <div className='mt-8 flex flex-col gap-y-4'>
                      <button
                         onClick={handleSignUp}
