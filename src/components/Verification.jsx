@@ -1,13 +1,13 @@
 import * as React from 'react'
-import RegisterForm from './RegisterForm'
+import VerificationForm from './VerificationForm'
 import RightSideMain from './RightSideMain'
 
-function Register() {
+function Verification() {
   return (
     <>
       <div className='flex w-full h-screen'>
         <div className='w-full flex items-center justify-center lg:w-1/2'>
-          <RegisterForm></RegisterForm>
+          <VerificationForm></VerificationForm>
         </div>
         <RightSideMain></RightSideMain>
       </div>
@@ -15,4 +15,4 @@ function Register() {
   )
 }
 
-export default Register
+export default Verification

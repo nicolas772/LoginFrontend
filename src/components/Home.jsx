@@ -2,7 +2,6 @@ import { signOut as awsSignOut } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
 import { useEffect, useState } from 'react';
-import { get } from 'aws-amplify/api';
 
 
 const Home = () => {
@@ -55,11 +54,6 @@ const Home = () => {
                     onClick={handleSignOut}
                     className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out p-3 rounded-xl bg-green-700 text-white text-lg font-bold'>
                     Cerrar Sesión
-                </button>
-                <button
-                    onClick={GetDetails}
-                    className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out p-3 rounded-xl bg-green-700 text-white text-lg font-bold'>
-                    Get Details
                 </button>
             </div>
         </div>
