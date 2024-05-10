@@ -22,9 +22,9 @@ const Form = () => {
    async function signInUser() {
       try {
          const { isSignedIn, nextStep } = await awsSignIn({ username, password });
-         if (isSignedIn){
+         if (isSignedIn) {
             navigate("/home")
-         }else {
+         } else {
             console.log(nextStep)
          }
       } catch (error) {
@@ -81,7 +81,9 @@ const Form = () => {
             </div>
             <div className='mt-8 flex justify-center items-center'>
                <p className='font-medium text-base'>¿No tienes una cuenta?</p>
-               <button className='text-green-700 text-base font-medium ml-2'>Registrate</button>
+               <button
+                  onClick={() => {navigate("/register")} }
+                  className='text-green-700 text-base font-medium ml-2'>Registrate</button>
             </div>
          </div>
       </div>
