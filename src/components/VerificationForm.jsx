@@ -3,12 +3,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { confirmSignUp } from 'aws-amplify/auth';
 import { useLocation } from 'react-router-dom';
+import { resendSignUpCode } from 'aws-amplify/auth';
+import Loader from './Loader';
 
 const VerificationForm = (props) => {
     const { username } = props
     const [confirmationCode, setConfirmationCode] = useState("");
     const [inConfirmation, setInConfirmation] = useState(true)
     const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [loading2, setLoading2] = useState(false)
     const location = useLocation()
     const currentUrl = location.pathname
     const navigate = useNavigate()
@@ -19,24 +23,42 @@ const VerificationForm = (props) => {
     };
 
     async function handleSignUpConfirmation() {
+        setLoading(true)
         try {
             const { isSignUpComplete, nextStep } = await confirmSignUp({
                 username,
                 confirmationCode
             })
             if (isSignUpComplete) {
+                setLoading(false)
                 setInConfirmation(false)
             }
         } catch (error) {
+            setLoading(false)
             setError(error.message)
         }
     }
 
     function handleRedirectLogin() {
-        if (currentUrl === '/register'){
+        if (currentUrl === '/register') {
             navigate('/login')
-        }else {
+        } else {
             window.location.reload();
+        }
+    }
+
+    const handleResendCode = async () => {
+        setLoading2(true)
+        try {
+            const {
+                destination,
+                deliveryMedium,
+                atributeName
+            } = await resendSignUpCode({ username })
+            setLoading2(false)
+        } catch (error) {
+            setLoading2(false)
+            console.log(error)
         }
     }
 
@@ -58,17 +80,28 @@ const VerificationForm = (props) => {
                         </div>
                         {error && <p className='text-red-500 mt-4 max-w-md'>{error}</p>}
                         <div className='mt-8 flex flex-col gap-y-4'>
-                            <button
-                                onClick={handleSignUpConfirmation}
-                                className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out py-3 rounded-xl bg-green-700 text-white text-lg font-bold'>
-                                Confirmar
-                            </button>
+                            {loading ? (
+                                <Loader></Loader>
+                            ) : (
+                                <button
+                                    onClick={handleSignUpConfirmation}
+                                    className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out py-3 rounded-xl bg-green-700 text-white text-lg font-bold'>
+                                    Confirmar
+                                </button>
+                            )}
                         </div>
                         <div className='mt-8 flex justify-center items-center'>
                             <p className='font-medium text-base'>¿No recibiste tu código?</p>
-                            <button
-                                onClick={() => { console.log("reenviar codigo") }}
-                                className='text-green-700 text-base font-medium ml-2'>Reenviar código</button>
+                            {loading2 ? (
+                                <Loader></Loader>
+                            ) : (
+                                <button
+                                    onClick={handleResendCode}
+                                    className='text-green-700 text-base font-medium ml-2'>Reenviar código</button>
+                            )}
+                        </div>
+                        <div className='text-base text-slate-400 mt-2 flex justify-center items-center'>
+                            <p className='font-medium text-base'>Recuerda revisar tu carpeta de Spam.</p>
                         </div>
                     </div>
                 </div>
@@ -78,7 +111,7 @@ const VerificationForm = (props) => {
                     <p className='font-medium text-lg text-gray-500 mt-4 max-w-md'>Tu verificación ha sido exitosa.</p>
 
                     <div className='mt-8'>
-                        
+
                         <div className='mt-8 flex justify-center items-center'>
                             <button
                                 onClick={handleRedirectLogin}
