@@ -50,7 +50,7 @@ const Prueba = () => {
                 <p>¡Bienvenido, {user.signInDetails.loginId}!</p>
             </div>
             <div>
-                <p>Esto es de prueba</p>
+                <p>Te amo mucho ❤️</p>
             </div>
             
         </div>
