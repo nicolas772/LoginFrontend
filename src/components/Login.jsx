@@ -1,6 +1,5 @@
 import * as React from 'react'
 import LoginForm from './LoginForm'
-import FormAWS from './FormAWS'
 import RighSideMain from './RightSideMain'
 
 function Login() {
