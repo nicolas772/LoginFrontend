@@ -16,7 +16,7 @@ const ProtectedRoutes = () => {
             setCurrentUser(userId);
          } catch (err) {
             //console.error(err);
-            console.log("no pasa nada amigo desde protected routes")
+            //console.log("no pasa nada amigo desde protected routes")
          } finally {
             setLoading(false);
          }

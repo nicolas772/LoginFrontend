@@ -1,6 +1,6 @@
 import { signOut as awsSignOut } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
-import { getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
+import { fetchUserAttributes } from 'aws-amplify/auth';
 import { useEffect, useState } from 'react';
 import Loader from './Loader';
 
@@ -22,8 +22,9 @@ const Prueba = () => {
     useEffect(() => {
         const fetchCurrentUser = async () => {
             try {
-                const user = await getCurrentUser();
-                setUser(user)
+                const userAttributes = await fetchUserAttributes()
+                setUser(userAttributes)
+                //console.log(user)
             } catch (error) {
                 console.error('Error al obtener el usuario actual:', error);
             } finally {
@@ -33,13 +34,6 @@ const Prueba = () => {
         fetchCurrentUser()
     }, [])
 
-    async function GetDetails() {
-        const getCurrent = await getCurrentUser();
-        const session = await fetchAuthSession();
-        console.log(getCurrent)
-        console.log(session)
-    }
-
     if (isLoading || !user) {
         return <Loader />;
     }
@@ -47,12 +41,12 @@ const Prueba = () => {
     return (
         <div className='m-8'>
             <div>
-                <p>¡Bienvenido, {user.signInDetails.loginId}!</p>
+                <p>¡Bienvenido, {user.email}!</p>
             </div>
             <div>
                 <p>Te amo mucho ❤️</p>
             </div>
-            
+
         </div>
     )
 }
