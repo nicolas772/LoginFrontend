@@ -66,11 +66,6 @@ const Home = () => {
                             className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out p-3 rounded-xl bg-green-700 text-white text-lg font-bold'>
                             Cerrar Sesión
                         </button>
-                        <button
-                            onClick={GetDetails}
-                            className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out p-3 rounded-xl bg-green-700 text-white text-lg font-bold'>
-                            get details
-                        </button>
                     </>
                 )}
             </div>
