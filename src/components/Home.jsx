@@ -1,6 +1,6 @@
 import { signOut as awsSignOut } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
-import { getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
+import { getCurrentUser, fetchUserAttributes } from 'aws-amplify/auth';
 import { useEffect, useState } from 'react';
 import Loader from './Loader';
 
@@ -26,8 +26,9 @@ const Home = () => {
     useEffect(() => {
         const fetchCurrentUser = async () => {
             try {
-                const user = await getCurrentUser();
-                setUser(user)
+                const userAttributes = await fetchUserAttributes()
+                setUser(userAttributes)
+                //console.log(user)
             } catch (error) {
                 console.error('Error al obtener el usuario actual:', error);
             } finally {
@@ -38,10 +39,12 @@ const Home = () => {
     }, [])
 
     async function GetDetails() {
-        const getCurrent = await getCurrentUser();
-        const session = await fetchAuthSession();
-        console.log(getCurrent)
-        console.log(session)
+        try{
+            const userAttributes = await fetchUserAttributes()
+            console.log(userAttributes)
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     if (isLoading || !user) {
@@ -51,17 +54,24 @@ const Home = () => {
     return (
         <div className='m-8'>
             <div>
-                <p>¡Bienvenido, {user.signInDetails.loginId}!</p>
+                <p>¡Bienvenido, {user.email}!</p>
             </div>
             <div>
                 {isLoading2 ? (
                     <Loader></Loader>
                 ) : (
-                    <button
-                        onClick={handleSignOut}
-                        className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out p-3 rounded-xl bg-green-700 text-white text-lg font-bold'>
-                        Cerrar Sesión
-                    </button>
+                    <>
+                        <button
+                            onClick={handleSignOut}
+                            className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out p-3 rounded-xl bg-green-700 text-white text-lg font-bold'>
+                            Cerrar Sesión
+                        </button>
+                        <button
+                            onClick={GetDetails}
+                            className='active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out p-3 rounded-xl bg-green-700 text-white text-lg font-bold'>
+                            get details
+                        </button>
+                    </>
                 )}
             </div>
         </div>
