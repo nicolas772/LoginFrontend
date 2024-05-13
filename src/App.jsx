@@ -18,6 +18,7 @@ function App() {
         setCurrentUser(user)
       } catch (err) {
         //console.error(err)
+        console.log("no pasa nada amigo")
       } finally {
         setLoading(false)
       }

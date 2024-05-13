@@ -38,15 +38,6 @@ const Home = () => {
         fetchCurrentUser()
     }, [])
 
-    async function GetDetails() {
-        try{
-            const userAttributes = await fetchUserAttributes()
-            console.log(userAttributes)
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
     if (isLoading || !user) {
         return <Loader />;
     }
