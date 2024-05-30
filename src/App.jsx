@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Home from "./components/Home";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import { getCurrentUser } from 'aws-amplify/auth';
 import Loader from "./components/Loader";
