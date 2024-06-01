@@ -30,7 +30,7 @@ const Home = () => {
 
     async function handleSendMessage() {
         console.log("apretaste boton")
-        fetch('http://34.229.221.55:80/send-message', {
+        fetch('https://r2s3fcbjbb.execute-api.us-east-1.amazonaws.com/send-message', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
